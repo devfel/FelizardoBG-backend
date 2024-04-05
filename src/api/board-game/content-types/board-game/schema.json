@@ -1,0 +1,79 @@
+{
+  "kind": "collectionType",
+  "collectionName": "board_games",
+  "info": {
+    "singularName": "board-game",
+    "pluralName": "board-games",
+    "displayName": "Board Game",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Title": {
+      "type": "string",
+      "required": true
+    },
+    "Description": {
+      "type": "text",
+      "required": true
+    },
+    "Value": {
+      "type": "decimal",
+      "max": 20000,
+      "min": 5,
+      "required": true
+    },
+    "Condition": {
+      "type": "string",
+      "required": true
+    },
+    "Images": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "owner": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "board_games"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    },
+    "OwnerID": {
+      "type": "integer",
+      "unique": false,
+      "required": false
+    },
+    "CoverImage": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "Idioma": {
+      "type": "string",
+      "required": true
+    },
+    "Ofertas": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::oferta.oferta",
+      "mappedBy": "board_game"
+    },
+    "MaiorOferta": {
+      "type": "decimal"
+    }
+  }
+}
