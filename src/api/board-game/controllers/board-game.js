@@ -10,22 +10,35 @@ const { createCoreController } = require("@strapi/strapi").factories;
 
 module.exports = createCoreController("api::board-game.board-game", {
   async create(ctx) {
+    // user is authenticated and part of the context
     const user = ctx.state.user;
 
-    const task = await super.create(ctx);
+    if (!user) {
+      return ctx.badRequest("User not authenticated");
+    }
 
-    const updated = await strapi.entityService.update(
-      "api::board-game.board-game",
-      task.data.id,
-      {
-        data: {
-          owner: user.id,
-          OwnerID: user.id,
-        },
-      }
-    );
+    // Start a transaction
+    const result = await strapi.db.transaction(async (trx) => {
+      // Create a new board game entry within the transaction
+      const task = await super.create(ctx, { trx });
 
-    return updated;
+      // Update the newly created board game entry with the owner information, also within the transaction
+      const updated = await strapi.entityService.update(
+        "api::board-game.board-game",
+        task.data.id,
+        {
+          data: {
+            owner: user.id,
+            OwnerID: user.id,
+          },
+          trx, // Pass the transaction object to ensure this operation is part of the transaction
+        }
+      );
+
+      return updated;
+    });
+
+    return result;
   },
 
   async update(ctx) {
