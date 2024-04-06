@@ -1,7 +1,19 @@
 module.exports = [
   "strapi::logger",
   "strapi::errors",
-  "strapi::cors",
+  {
+    name: "strapi::cors",
+    config: {
+      origin: [
+        "https://tabuai.vercel.app",
+        "https://www.tabuai.com.br",
+        "https://tabuai.com.br",
+      ],
+      methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"],
+      headers: ["Content-Type", "Authorization", "Origin", "Accept"],
+      keepHeaderOnError: true,
+    },
+  },
   "strapi::poweredBy",
   "strapi::query",
   "strapi::body",
