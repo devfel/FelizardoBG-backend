@@ -8,7 +8,7 @@ module.exports = [
         "https://tabuai.vercel.app",
         "https://www.tabuai.com.br",
         "https://tabuai.com.br",
-        "https://felizardobg-backend.onrender.com/",
+        "https://felizardobg-backend.onrender.com",
       ],
       methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"],
       headers: ["Content-Type", "Authorization", "Origin", "Accept"],
