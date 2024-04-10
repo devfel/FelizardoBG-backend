@@ -9,6 +9,7 @@ module.exports = [
         "https://www.tabuai.com.br",
         "https://tabuai.com.br",
         "https://felizardobg-backend.onrender.com",
+        "https://tabuai-backend.adaptable.app",
       ],
       methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"],
       headers: ["Content-Type", "Authorization", "Origin", "Accept"],
