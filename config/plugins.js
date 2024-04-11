@@ -1,7 +1,7 @@
 module.exports = ({ env }) => ({
   upload: {
     config: {
-      sizeLimit: 3 * 1024 * 1024, // 3mb in bytes
+      sizeLimit: 1 * 1024 * 1024, // 1mb in bytes
       provider: "cloudinary",
       providerOptions: {
         cloud_name: env("CLOUDINARY_NAME"),
