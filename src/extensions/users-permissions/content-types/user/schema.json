@@ -84,6 +84,13 @@
     "nomeUsuario": {
       "type": "string",
       "required": true
+    },
+    "estado": {
+      "type": "string",
+      "required": false
+    },
+    "cidade": {
+      "type": "string"
     }
   }
 }

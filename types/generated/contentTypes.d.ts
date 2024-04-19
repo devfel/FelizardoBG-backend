@@ -835,6 +835,8 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
     >;
     whatsapp: Attribute.String & Attribute.Unique;
     nomeUsuario: Attribute.String & Attribute.Required;
+    estado: Attribute.String;
+    cidade: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
