@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "questions",
+  "info": {
+    "singularName": "question",
+    "pluralName": "questions",
+    "displayName": "Question"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Content": {
+      "type": "text",
+      "required": true
+    },
+    "board_game": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::board-game.board-game",
+      "inversedBy": "questions"
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "questions"
+    },
+    "answer": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::answer.answer",
+      "mappedBy": "question"
+    }
+  }
+}

@@ -74,6 +74,18 @@
     },
     "MaiorOferta": {
       "type": "decimal"
+    },
+    "questions": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::question.question",
+      "mappedBy": "board_game"
+    },
+    "answers": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::answer.answer",
+      "mappedBy": "board_game"
     }
   }
 }

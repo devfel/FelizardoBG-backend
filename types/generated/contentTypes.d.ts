@@ -362,6 +362,52 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
+export interface ApiAnswerAnswer extends Schema.CollectionType {
+  collectionName: 'answers';
+  info: {
+    singularName: 'answer';
+    pluralName: 'answers';
+    displayName: 'Answer';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Content: Attribute.Text & Attribute.Required;
+    question: Attribute.Relation<
+      'api::answer.answer',
+      'oneToOne',
+      'api::question.question'
+    >;
+    users_permissions_user: Attribute.Relation<
+      'api::answer.answer',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    board_game: Attribute.Relation<
+      'api::answer.answer',
+      'manyToOne',
+      'api::board-game.board-game'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::answer.answer',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::answer.answer',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiBoardGameBoardGame extends Schema.CollectionType {
   collectionName: 'board_games';
   info: {
@@ -402,6 +448,16 @@ export interface ApiBoardGameBoardGame extends Schema.CollectionType {
       'api::oferta.oferta'
     >;
     MaiorOferta: Attribute.Decimal;
+    questions: Attribute.Relation<
+      'api::board-game.board-game',
+      'oneToMany',
+      'api::question.question'
+    >;
+    answers: Attribute.Relation<
+      'api::board-game.board-game',
+      'oneToMany',
+      'api::answer.answer'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -455,6 +511,51 @@ export interface ApiOfertaOferta extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::oferta.oferta',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiQuestionQuestion extends Schema.CollectionType {
+  collectionName: 'questions';
+  info: {
+    singularName: 'question';
+    pluralName: 'questions';
+    displayName: 'Question';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Content: Attribute.Text & Attribute.Required;
+    board_game: Attribute.Relation<
+      'api::question.question',
+      'manyToOne',
+      'api::board-game.board-game'
+    >;
+    users_permissions_user: Attribute.Relation<
+      'api::question.question',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    answer: Attribute.Relation<
+      'api::question.question',
+      'oneToOne',
+      'api::answer.answer'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::question.question',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::question.question',
       'oneToOne',
       'admin::user'
     > &
@@ -837,6 +938,16 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
     nomeUsuario: Attribute.String & Attribute.Required;
     estado: Attribute.String;
     cidade: Attribute.String;
+    questions: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::question.question'
+    >;
+    answers: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::answer.answer'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -911,8 +1022,10 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
+      'api::answer.answer': ApiAnswerAnswer;
       'api::board-game.board-game': ApiBoardGameBoardGame;
       'api::oferta.oferta': ApiOfertaOferta;
+      'api::question.question': ApiQuestionQuestion;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
