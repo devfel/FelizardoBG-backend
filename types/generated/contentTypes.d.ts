@@ -362,207 +362,6 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
-export interface ApiAnswerAnswer extends Schema.CollectionType {
-  collectionName: 'answers';
-  info: {
-    singularName: 'answer';
-    pluralName: 'answers';
-    displayName: 'Answer';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    Content: Attribute.Text & Attribute.Required;
-    question: Attribute.Relation<
-      'api::answer.answer',
-      'oneToOne',
-      'api::question.question'
-    >;
-    users_permissions_user: Attribute.Relation<
-      'api::answer.answer',
-      'manyToOne',
-      'plugin::users-permissions.user'
-    >;
-    board_game: Attribute.Relation<
-      'api::answer.answer',
-      'manyToOne',
-      'api::board-game.board-game'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::answer.answer',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::answer.answer',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiBoardGameBoardGame extends Schema.CollectionType {
-  collectionName: 'board_games';
-  info: {
-    singularName: 'board-game';
-    pluralName: 'board-games';
-    displayName: 'Board Game';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    Title: Attribute.String & Attribute.Required;
-    Description: Attribute.Text & Attribute.Required;
-    Value: Attribute.Decimal &
-      Attribute.Required &
-      Attribute.SetMinMax<
-        {
-          min: 5;
-          max: 20000;
-        },
-        number
-      >;
-    Condition: Attribute.String & Attribute.Required;
-    Images: Attribute.Media;
-    owner: Attribute.Relation<
-      'api::board-game.board-game',
-      'manyToOne',
-      'plugin::users-permissions.user'
-    >;
-    active: Attribute.Boolean & Attribute.Required & Attribute.DefaultTo<true>;
-    OwnerID: Attribute.Integer;
-    CoverImage: Attribute.Media & Attribute.Required;
-    Idioma: Attribute.String & Attribute.Required;
-    Ofertas: Attribute.Relation<
-      'api::board-game.board-game',
-      'oneToMany',
-      'api::oferta.oferta'
-    >;
-    MaiorOferta: Attribute.Decimal;
-    questions: Attribute.Relation<
-      'api::board-game.board-game',
-      'oneToMany',
-      'api::question.question'
-    >;
-    answers: Attribute.Relation<
-      'api::board-game.board-game',
-      'oneToMany',
-      'api::answer.answer'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::board-game.board-game',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::board-game.board-game',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiOfertaOferta extends Schema.CollectionType {
-  collectionName: 'ofertas';
-  info: {
-    singularName: 'oferta';
-    pluralName: 'ofertas';
-    displayName: 'Oferta';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    ValorOferta: Attribute.Decimal & Attribute.Required;
-    board_game: Attribute.Relation<
-      'api::oferta.oferta',
-      'manyToOne',
-      'api::board-game.board-game'
-    >;
-    usuario_fez_oferta_id: Attribute.Relation<
-      'api::oferta.oferta',
-      'manyToOne',
-      'plugin::users-permissions.user'
-    >;
-    UsuarioDaOfertaID: Attribute.Integer;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::oferta.oferta',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::oferta.oferta',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiQuestionQuestion extends Schema.CollectionType {
-  collectionName: 'questions';
-  info: {
-    singularName: 'question';
-    pluralName: 'questions';
-    displayName: 'Question';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    Content: Attribute.Text & Attribute.Required;
-    board_game: Attribute.Relation<
-      'api::question.question',
-      'manyToOne',
-      'api::board-game.board-game'
-    >;
-    users_permissions_user: Attribute.Relation<
-      'api::question.question',
-      'manyToOne',
-      'plugin::users-permissions.user'
-    >;
-    answer: Attribute.Relation<
-      'api::question.question',
-      'oneToOne',
-      'api::answer.answer'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::question.question',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::question.question',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -948,6 +747,12 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'oneToMany',
       'api::answer.answer'
     >;
+    usuarioLudopedia: Attribute.String & Attribute.Unique;
+    external_bgs: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::external-bg.external-bg'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -1012,6 +817,255 @@ export interface PluginI18NLocale extends Schema.CollectionType {
   };
 }
 
+export interface ApiAnswerAnswer extends Schema.CollectionType {
+  collectionName: 'answers';
+  info: {
+    singularName: 'answer';
+    pluralName: 'answers';
+    displayName: 'Answer';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Content: Attribute.Text & Attribute.Required;
+    question: Attribute.Relation<
+      'api::answer.answer',
+      'oneToOne',
+      'api::question.question'
+    >;
+    users_permissions_user: Attribute.Relation<
+      'api::answer.answer',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    board_game: Attribute.Relation<
+      'api::answer.answer',
+      'manyToOne',
+      'api::board-game.board-game'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::answer.answer',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::answer.answer',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiBoardGameBoardGame extends Schema.CollectionType {
+  collectionName: 'board_games';
+  info: {
+    singularName: 'board-game';
+    pluralName: 'board-games';
+    displayName: 'Board Game';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Title: Attribute.String & Attribute.Required;
+    Description: Attribute.Text & Attribute.Required;
+    Value: Attribute.Decimal &
+      Attribute.Required &
+      Attribute.SetMinMax<
+        {
+          min: 5;
+          max: 20000;
+        },
+        number
+      >;
+    Condition: Attribute.String & Attribute.Required;
+    Images: Attribute.Media;
+    owner: Attribute.Relation<
+      'api::board-game.board-game',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    active: Attribute.Boolean & Attribute.Required & Attribute.DefaultTo<true>;
+    OwnerID: Attribute.Integer;
+    CoverImage: Attribute.Media & Attribute.Required;
+    Idioma: Attribute.String & Attribute.Required;
+    Ofertas: Attribute.Relation<
+      'api::board-game.board-game',
+      'oneToMany',
+      'api::oferta.oferta'
+    >;
+    MaiorOferta: Attribute.Decimal;
+    questions: Attribute.Relation<
+      'api::board-game.board-game',
+      'oneToMany',
+      'api::question.question'
+    >;
+    answers: Attribute.Relation<
+      'api::board-game.board-game',
+      'oneToMany',
+      'api::answer.answer'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::board-game.board-game',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::board-game.board-game',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiExternalBgExternalBg extends Schema.CollectionType {
+  collectionName: 'external_bgs';
+  info: {
+    singularName: 'external-bg';
+    pluralName: 'external-bgs';
+    displayName: 'External BG';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    bgnomeludopedia: Attribute.String;
+    precoludopedia: Attribute.String;
+    condicaoludopedia: Attribute.String;
+    imagemludopedia: Attribute.String;
+    linkprodutoludopedia: Attribute.String;
+    vendaouleilao: Attribute.String;
+    federacaoludopedia: Attribute.String;
+    cidadeludopedia: Attribute.String;
+    descricaoludopedia: Attribute.String;
+    terminaemludopedia: Attribute.String;
+    dononome: Attribute.String;
+    donoemail: Attribute.String;
+    donouserludopedia: Attribute.String;
+    donoid: Attribute.Relation<
+      'api::external-bg.external-bg',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    donocodid: Attribute.Integer;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::external-bg.external-bg',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::external-bg.external-bg',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiOfertaOferta extends Schema.CollectionType {
+  collectionName: 'ofertas';
+  info: {
+    singularName: 'oferta';
+    pluralName: 'ofertas';
+    displayName: 'Oferta';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    ValorOferta: Attribute.Decimal & Attribute.Required;
+    board_game: Attribute.Relation<
+      'api::oferta.oferta',
+      'manyToOne',
+      'api::board-game.board-game'
+    >;
+    usuario_fez_oferta_id: Attribute.Relation<
+      'api::oferta.oferta',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    UsuarioDaOfertaID: Attribute.Integer;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::oferta.oferta',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::oferta.oferta',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiQuestionQuestion extends Schema.CollectionType {
+  collectionName: 'questions';
+  info: {
+    singularName: 'question';
+    pluralName: 'questions';
+    displayName: 'Question';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Content: Attribute.Text & Attribute.Required;
+    board_game: Attribute.Relation<
+      'api::question.question',
+      'manyToOne',
+      'api::board-game.board-game'
+    >;
+    users_permissions_user: Attribute.Relation<
+      'api::question.question',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    answer: Attribute.Relation<
+      'api::question.question',
+      'oneToOne',
+      'api::answer.answer'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::question.question',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::question.question',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -1022,10 +1076,6 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
-      'api::answer.answer': ApiAnswerAnswer;
-      'api::board-game.board-game': ApiBoardGameBoardGame;
-      'api::oferta.oferta': ApiOfertaOferta;
-      'api::question.question': ApiQuestionQuestion;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
@@ -1034,6 +1084,11 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
+      'api::answer.answer': ApiAnswerAnswer;
+      'api::board-game.board-game': ApiBoardGameBoardGame;
+      'api::external-bg.external-bg': ApiExternalBgExternalBg;
+      'api::oferta.oferta': ApiOfertaOferta;
+      'api::question.question': ApiQuestionQuestion;
     }
   }
 }

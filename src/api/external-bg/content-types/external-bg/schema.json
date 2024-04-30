@@ -1,0 +1,64 @@
+{
+  "kind": "collectionType",
+  "collectionName": "external_bgs",
+  "info": {
+    "singularName": "external-bg",
+    "pluralName": "external-bgs",
+    "displayName": "External BG",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "bgnomeludopedia": {
+      "type": "string"
+    },
+    "precoludopedia": {
+      "type": "string"
+    },
+    "condicaoludopedia": {
+      "type": "string"
+    },
+    "imagemludopedia": {
+      "type": "string"
+    },
+    "linkprodutoludopedia": {
+      "type": "string"
+    },
+    "vendaouleilao": {
+      "type": "string"
+    },
+    "federacaoludopedia": {
+      "type": "string"
+    },
+    "cidadeludopedia": {
+      "type": "string"
+    },
+    "descricaoludopedia": {
+      "type": "string"
+    },
+    "terminaemludopedia": {
+      "type": "string"
+    },
+    "dononome": {
+      "type": "string"
+    },
+    "donoemail": {
+      "type": "string"
+    },
+    "donouserludopedia": {
+      "type": "string"
+    },
+    "donoid": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "external_bgs"
+    },
+    "donocodid": {
+      "type": "integer"
+    }
+  }
+}

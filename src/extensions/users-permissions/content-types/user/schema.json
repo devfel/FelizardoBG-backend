@@ -103,6 +103,16 @@
       "relation": "oneToMany",
       "target": "api::answer.answer",
       "mappedBy": "users_permissions_user"
+    },
+    "usuarioLudopedia": {
+      "type": "string",
+      "unique": true
+    },
+    "external_bgs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::external-bg.external-bg",
+      "mappedBy": "donoid"
     }
   }
 }
